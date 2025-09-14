@@ -1,0 +1,20 @@
+private void loadMovies() {
+    try (BufferedReader br = new BufferedReader(new FileReader("movies.txt"))) {
+        String line;
+        while ((line = br.readLine()) != null) {
+            String[] parts = line.split(",");
+            if (parts.length == 2) {
+                String name = parts[0].trim();
+                int seats = Integer.parseInt(parts[1].trim());
+                movies.add(new Movie(name, seats));
+                movieComboBox.addItem(name);
+            }
+        }
+    } catch (IOException | NumberFormatException e) {
+        JOptionPane.showMessageDialog(this, "Error loading movies: " + e.getMessage());
+    }
+
+    if (movies.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "No movies found. Please add movies manually.");
+    }
+}
